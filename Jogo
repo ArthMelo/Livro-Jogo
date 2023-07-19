@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<string.h>
+#include <stdlib.h>
+
+typedef struct PERSONAGEM_
+{
+    int vida;
+    int lealdade;
+    int defesa;
+    int itens[3];
+} personagem;
+
+void inicio()
+{
+    char texto[2000];
+        FILE *arquivo;
+        arquivo = fopen("arthur.txt","r");
+
+        if(arquivo == NULL){
+        printf("Impossivel rodar");
+    }
+
+    while(fscanf(arquivo, "%s", texto) != EOF){
+        printf("%s ", texto);
+    }
+    fclose(arquivo);
+}
+
+void comecar()
+{
+    int i;
+
+    printf("Aperte [1] para comecar um novo jogo\nAperte [2] para recomecar um jogo\nAperte [3] para sair\n");
+    scanf("%d", &i);
+
+    if(i == 2){
+        printf("Nao vai comecar nao kkkk\n");
+    }
+    if(i == 1){
+        inicio();
+    } else {
+        return;
+    }
+
+}
+void atributos(){
+    printf("Voce ira controlar Hector, escolha seus atributos para comecar\n");
+        system("pause");
+    printf("Hector comeca com 100 de vida e 0 de defesa, alguns atributos irao aumentando conforme algumas escolhas\n");
+        system("pause");
+    printf("Escolha sua habilidade principal para comecar o jogo\n");
+}
+
+int main(void)
+{
+    comecar();
+    system("pause");
+    atributos();
+    
+}
