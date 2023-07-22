@@ -21,7 +21,7 @@ void inicio()
 void comecar()
 {
     int i;
-    printf("BEM-VINDO AO CYBERPIKA 2069\n");
+    printf("BEM-VINDO AO NEON NEXUS\n");
     system("pause");
     printf("Digite [1] para comecar um novo jogo\nDigite [2] para recomecar um jogo\nDigite [3] para sair\n");
     scanf("%d", &i);
