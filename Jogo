@@ -2,6 +2,44 @@
 #include<string.h>
 #include <stdlib.h>
 
+void inicio();
+void comecar();
+void continuar();
+void atributos();
+void passagem();
+void escolha1();
+void escolha2();
+
+typedef struct PERSONAGEM_
+{
+    int vida;
+    int lealdade;
+    int defesa;
+    int ataque;
+    int itens[3];
+} personagem;
+
+int main(void)
+{
+    comecar();
+    printf("\n");
+    system("pause");
+    continuar();
+    printf("\n");
+    system("pause");
+    atributos();
+    
+    personagem Hector;
+
+        Hector.vida = 100;
+        Hector.defesa = 0;
+        Hector.ataque = 5;
+
+    passagem();
+    system("pause");
+    escolha1();
+}
+
 void inicio()
 {
     char texto[2000];
@@ -52,16 +90,6 @@ void continuar()
     fclose(arquivo);
 }
 
-typedef struct PERSONAGEM_
-{
-    int vida;
-    int lealdade;
-    int defesa;
-    int ataque;
-    int itens[3];
-} personagem;
-
-
 void atributos(){
     printf("Voce ira controlar Hector, ele comeca com 100 de vida, 5 de ataque e 0 de defesa\n");
         system("pause");
@@ -88,40 +116,38 @@ void passagem()
     fclose(arquivo);
 }
 
+
 void escolha1()
 {
-    int i = 0;
+    int i;
     printf("Digite [1] para Hector explorar a passagem\nDigite [2] para Hector ignorar a passagem\n");
     scanf("%d", &i);
     if(i == 1)
     {
-        printf("historia continua dentro da passagem");
-        return;
+        escolha2();
     }
     if(i == 2)
     {
-        printf("historia segue sem a passagem");
+        printf("//historia segue sem a passagem");
         return;
-    } 
-
+    }
 }
-int main(void)
+
+void escolha2()
 {
-    comecar();
-    printf("\n");
+    int i;
+    printf("Entrando por essa passagem, ele passa por um grande corredor que parecia muito mais um labirinto, Hector encontra muitas salas com mapas de todas as partes da cidade\n");
     system("pause");
-    continuar();
-    printf("\n");
-    system("pause");
-    atributos();
-    
-    personagem Hector;
-
-        Hector.vida = 100;
-        Hector.defesa = 0;
-        Hector.ataque = 5;
-
-    passagem();
-    system("pause");
-    escolha1();
+    printf("Digite [1] para continuar explorando\nDigite [2] para fujir sem nada\n");
+    scanf("%d", &i);
+        if(i == 1)
+        {
+            printf("//Hector vai ser pego");
+            return;
+        }
+        if(i == 2)
+        {
+            printf("//Hector foje sem nada");
+            return;
+        }
 }
