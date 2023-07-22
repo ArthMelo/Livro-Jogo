@@ -2,14 +2,6 @@
 #include<string.h>
 #include <stdlib.h>
 
-typedef struct PERSONAGEM_
-{
-    int vida;
-    int lealdade;
-    int defesa;
-    int itens[3];
-} personagem;
-
 void inicio()
 {
     char texto[2000];
@@ -29,8 +21,9 @@ void inicio()
 void comecar()
 {
     int i;
-
-    printf("Aperte [1] para comecar um novo jogo\nAperte [2] para recomecar um jogo\nAperte [3] para sair\n");
+    printf("BEM-VINDO AO CYBERPIKA 2069\n");
+    system("pause");
+    printf("Digite [1] para comecar um novo jogo\nDigite [2] para recomecar um jogo\nDigite [3] para sair\n");
     scanf("%d", &i);
 
     if(i == 2){
@@ -39,22 +32,61 @@ void comecar()
     if(i == 1){
         inicio();
     } else {
-        return;
+        exit(1);
+    }
+}
+
+void continuar()
+{
+    char texto[2000];
+        FILE *arquivo;
+        arquivo = fopen("inicio2.txt","r");
+
+        if(arquivo == NULL){
+        printf("Impossivel rodar");
     }
 
+    while(fscanf(arquivo, "%s", texto) != EOF){
+        printf("%s ", texto);
+    }
+    fclose(arquivo);
 }
+
+typedef struct PERSONAGEM_
+{
+    int vida;
+    int lealdade;
+    int defesa;
+    int ataque;
+    int itens[3];
+} personagem;
+
+
 void atributos(){
-    printf("Voce ira controlar Hector, escolha seus atributos para comecar\n");
+    printf("Voce ira controlar Hector, ele comeca com 100 de vida, 5 de ataque e 0 de defesa\n");
         system("pause");
-    printf("Hector comeca com 100 de vida e 0 de defesa, alguns atributos irao aumentando conforme algumas escolhas\n");
+    printf("Seus atributos aumentarao conforme suas escolhas e sua jornada\n");
         system("pause");
-    printf("Escolha sua habilidade principal para comecar o jogo\n");
+    printf("BOA SORTE!\n");
+        system("pause");
+
 }
 
 int main(void)
 {
     comecar();
+    printf("\n");
+    system("pause");
+    continuar();
+    printf("\n");
     system("pause");
     atributos();
+    
+    personagem Hector;
+
+        Hector.vida = 100;
+        Hector.defesa = 0;
+        Hector.ataque = 5;
+
     
 }
