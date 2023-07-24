@@ -1,14 +1,19 @@
 #include<stdio.h>
 #include<string.h>
-#include <stdlib.h>
+#include<stdlib.h>
+#include<time.h>
 
 void inicio();
 void comecar();
 void continuar();
 void atributos();
 void passagem();
-void escolha1();
-void escolha2();
+void capitulo1();
+void capitulo2();
+void defesa(int dano);
+int ataque(int vida);
+void combate(int vida, int dano);
+void morte();
 
 typedef struct PERSONAGEM_
 {
@@ -19,25 +24,24 @@ typedef struct PERSONAGEM_
     int itens[3];
 } personagem;
 
+personagem Hector;
+
 int main(void)
 {
     comecar();
-    printf("\n");
     system("pause");
+    printf("\n");
     continuar();
-    printf("\n");
     system("pause");
+    printf("\n");
     atributos();
-    
-    personagem Hector;
 
         Hector.vida = 100;
-        Hector.defesa = 0;
+        Hector.defesa = 2;
         Hector.ataque = 5;
 
-    passagem();
+    capitulo1();
     system("pause");
-    escolha1();
 }
 
 void inicio()
@@ -69,6 +73,7 @@ void comecar()
     }
     if(i == 1){
         inicio();
+        printf("\n");
     } else {
         exit(1);
     }
@@ -88,15 +93,15 @@ void continuar()
         printf("%s ", texto);
     }
     fclose(arquivo);
+    printf("\n");
 }
 
 void atributos(){
-    printf("Voce ira controlar Hector, ele comeca com 100 de vida, 5 de ataque e 0 de defesa\n");
-        system("pause");
+    printf("Voce ira controlar Hector, ele comeca com 100 de vida, 5 de ataque e 2 de defesa\n\n");
     printf("Seus atributos aumentarao conforme suas escolhas e sua jornada\n");
-        system("pause");
     printf("BOA SORTE!\n");
         system("pause");
+        printf("\n");
 
 }
 
@@ -116,38 +121,188 @@ void passagem()
     fclose(arquivo);
 }
 
-
-void escolha1()
+void capitulo1()
 {
     int i;
-    printf("Digite [1] para Hector explorar a passagem\nDigite [2] para Hector ignorar a passagem\n");
-    scanf("%d", &i);
-    if(i == 1)
-    {
-        escolha2();
+     char texto1[2000];
+        FILE *arquivo;
+        arquivo = fopen("cap1.txt","r");
+
+        if(arquivo == NULL){
+        printf("Impossivel rodar\n");
     }
-    if(i == 2)
-    {
-        printf("//historia segue sem a passagem");
-        return;
+
+    while(fscanf(arquivo, "%s", texto1) != EOF){
+        printf("%s ", texto1);
+    }
+    fclose(arquivo);
+
+    system("pause");
+    printf("Digite [1] para investigar\nDigite [2] para ignorar\n");
+    scanf("%d", &i);
+
+    if(i == 1){
+        char texto2[2000];
+        FILE *arquivo;
+        arquivo = fopen("cap1_2.txt","r");
+
+        if(arquivo == NULL){
+        printf("Impossivel rodar");
+    }
+
+    while(fscanf(arquivo, "%s", texto2) != EOF){
+        printf("%s ", texto2);
+    }
+    fclose(arquivo);
+    system("pause");
+    printf("\"Hey, garoto! O que voce esta fazendo por aqui? Eh melhor sair antes que a Pilar te pegue!\",\nGrilo alertou Hector com um sorriso cinico.\n");
+    printf("[1] \"Voce acha que eu tenho pra onde ir?\"\n[2] \"Te interressa lerdao?\"\n[3] Ficar em silencio\n");
+    
+    int j;
+    scanf("%d", &j);
+
+        if(j == 1){
+            printf("\"Voce acha que eu tenho pra onde ir?\"\n");
+        }
+        if(j == 2){
+            printf("\"Te interressa lerdao?\"\n");
+        }
+        if(j == 3){
+            printf("Hector permanece em silencio...\n");
+        }
+
+        char texto3[2000];
+        FILE *entrada;
+        entrada = fopen("cap1_3.txt","r");
+
+        if(entrada == NULL){
+        printf("Impossivel rodar");
+    }
+
+    while(fscanf(entrada, "%s", texto3) != EOF){
+        printf("%s ", texto3);
+    }
+    fclose(entrada);
+    printf("\n");
+
+    printf("Aceitar a proposta de Grilo?\n[1] \"Sim, ja esta na hora de todo esse imperio acabar\"\n[2] \"Nao, eu vou seguir meu caminho, valeu\"\n");
+    scanf("%d", &j);
+
+        if(j == 1){
+            printf("Voce caiu em uma armadilha e agora precisa lutar\n");
+            combate(100, 50);
+        }
+        if(j == 2){
+            int a;
+            printf("Apos negar a proposta do desconhecido, Hector percebe uma pequena movimentacao entre as criancas, alguma coisa dizia para ele fugir dali\n");
+            printf("[1] Fugir\n[2] Ver o que acontece\n");
+            scanf("%d", &a);
+                if(a == 1){
+                    printf("Hector foge o mais rapido possivel, fugindo das crianças que o atacariam");
+                }
+                if(a == 2){
+                    printf("Voce caiu em uma armadilha e agora precisa lutar\n");
+                    combate(100, 50);
+                }
+
+
+        }
+
+    }
+    if(i == 2){
+        capitulo2();
     }
 }
 
-void escolha2()
-{
-    int i;
-    printf("Entrando por essa passagem, ele passa por um grande corredor que parecia muito mais um labirinto, Hector encontra muitas salas com mapas de todas as partes da cidade\n");
+void capitulo2(){
+    passagem();
     system("pause");
-    printf("Digite [1] para continuar explorando\nDigite [2] para fujir sem nada\n");
+    
+    int i;
+    printf("Digite [1] para Hector explorar a passagem\nDigite [2] para Hector ignorar a passagem\n");
     scanf("%d", &i);
+        if(i == 1){
+            printf("Entrando por essa passagem, ele passa por um grande corredor que parecia muito mais um labirinto, Hector encontra muitas salas com mapas de todas as partes da cidade\n");
+            system("pause");
+            printf("Digite [1] para continuar explorando\nDigite [2] para fujir sem nada\n");
+            scanf("%d", &i);
         if(i == 1)
         {
-            printf("//Hector vai ser pego");
+            printf("Em cada uma dessas sala");
             return;
         }
         if(i == 2)
         {
-            printf("//Hector foje sem nada");
+            printf("//Hector foge sem nada");
             return;
         }
+    }
+}
+
+void save(personagem Hector)
+{
+    FILE *save;
+    save = fopen("save.txt", "wb");
+
+    fprintf(save, "%d %d %d ", Hector.vida, Hector.defesa, Hector.ataque);
+
+    
+    fclose(save);
+}
+
+void defesa(int dano)
+{
+    int dado, danodefendido;
+    dado = rand() % dano;
+    danodefendido = dado / Hector.defesa;
+    if (danodefendido < 0)
+    {
+        danodefendido = 0;
+    }
+        Hector.vida -= (dano - danodefendido);
+    printf("VOCE TOMOU %d DE DANO\n", danodefendido);
+}
+
+int atacar(int vida)
+{
+    int danodado;
+    danodado = rand() % Hector.ataque;
+    vida -= danodado;
+
+    printf("\n\nO INIMIGO PERDEU %d DE VIDA\n\n", vida);
+    return vida;
+}
+
+void combate(int vida, int dano)
+{
+    int i;
+    while(vida > 0 && Hector.vida > 0)
+    {
+        printf("Voce esta sendo atacado\n");
+        printf("[1] Lutar\n[2]Fugir");
+        scanf("%d", &i);
+        if(i == 1)
+        {
+            atacar(vida);
+            defesa(dano);
+            morte();
+            printf(" A vida de Hector esta em %d\n", Hector.vida);
+        }
+        if(i == 2)
+        {
+            defesa(dano);
+            morte();
+            printf(" A vida de Hector esta em %d\n", Hector.vida);
+            return;
+        }
+    }
+}
+
+void morte()
+{
+    if(Hector.vida < 0)
+    {
+        printf("\n\nVOCE MORREU\n\n");
+        exit(1);
+    }
 }
