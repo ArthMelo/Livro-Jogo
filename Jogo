@@ -11,13 +11,13 @@ void passagem();
 void capitulo1();
 void capitulo2();
 void defesa(int dano);
-int ataque(int vida);
 void combate(int vida, int dano);
 void morte();
 void capitulo3();
 void save();
 void final();
 void capituloinicial();
+void capitulofinal();
 
 typedef struct Personagem
 {
@@ -42,13 +42,14 @@ int main(void)
 
     capituloinicial();
     printf("\n");
-    atributos();
 
         Hector.vida = 100;
         Hector.defesa = 0;
         Hector.ataque = 0;
         Hector.agilidade = 0;
-
+    
+    atributos();
+    save();
     capitulo1();
     system("pause");
 }
@@ -90,7 +91,7 @@ void comecar()
             case 3:
             printf("Integrantes:\nArthur de Melo Barbosa\nDaniel Pereira da Costa\nSamuel Alexandre Barreto\n");
             system("pause");
-            comecar();
+
 
             default:
             printf("Escolha uma opcao valida");
@@ -256,6 +257,9 @@ void capitulo1()
                 if(a == 1){
                     if(Hector.agilidade >= 5){
                     printf("Hector foge o mais rapido possivel, fugindo das crianças que o atacariam\n");
+                    system("pause");
+                    capitulo2();
+                    return;
                     } else {
                         printf("Hector não conseguiu fugir e agora precisa lutar");
                         combate(100, 50);
@@ -287,15 +291,23 @@ void capitulo2(){
             scanf("%d", &i);
                 if(i == 1)
                 {
-                printf("Em cada uma dessas sala");
-                return;
+                    char texto4[2000];
+                    FILE *rebeldes = fopen("cap2_1.txt", "r");
+                     while(fscanf(rebeldes, "%s", rebeldes) != EOF){
+                    printf("%s ", texto4);
+                    fclose(rebeldes);
+                    printf("\n");
+                    system("pause");
+
+
                 }
                 if(i == 2)
                 {
-                 printf("//Hector foge sem nada");
+                 printf("Hector tenta fugir mas acaba sendo encontrado por um grupo rebelde\n");
                 return;
                 }
     }
+}
 }
 
 void defesa(int dano)
@@ -311,30 +323,31 @@ void defesa(int dano)
     printf("VOCE TOMOU %d DE DANO\n", danodefendido);
 }
 
-int atacar(int vida)
-{
-    int danodado;
-    danodado = rand() % Hector.ataque;
-    vida -= danodado;
-
-    printf("\n\nO INIMIGO PERDEU %d DE VIDA\n\n", vida);
-    return vida;
-}
-
 void combate(int vida, int dano)
 {
     int i;
     while(vida > 0 && Hector.vida > 0)
     {
-        printf("Voce esta sendo atacado\n");
+        printf("\nVoce esta sendo atacado\n");
         printf("[1] Lutar\n[2]Fugir\n");
         scanf("%d", &i);
         if(i == 1)
         {
-            atacar(vida);
-            defesa(dano);
-            morte();
-            printf(" A vida de Hector esta em %d\n", Hector.vida);
+            int danodado;
+            danodado = rand() % Hector.ataque;
+            vida -= danodado;
+
+            printf("Hector deu %d de dano\n", danodado);
+
+            if(vida < 0){
+                printf("Hector venceu a luta\n");
+                return;
+            } else{
+                defesa(dano);
+                morte();
+                printf(" A vida de Hector esta em %d\n", Hector.vida);
+            }
+            
         }
         if(i == 2)
         {
@@ -427,6 +440,35 @@ void final()
     return;
 }
 
+void capitulofinal()
+{
+printf("\nVocê finalmente chegou ao confronto final com o CEO da NeonCyber Corp.\n");
+    printf("Você deseja seguir o caminho da vingança e matá-lo ou buscar a justiça?\n");
+    printf("1. Matar o CEO\n");
+    printf("2. Buscar a justiça\n");
 
+    int escolha;
+    scanf("%d", &escolha);
+
+    if (escolha == 1) {
+        printf("\nHector sucumbe à vingança e mata o CEO da NeonCyber Corp, sujando suas mãos de sangue.\n");
+        printf("Infelizmente, seu desejo por vingança o consome, e ele se torna um fugitivo da justiça.\n");
+    } else if (escolha == 2) {
+        printf("\nHector decide seguir o caminho da justiça, buscando indiciar o CEO da NeonCyber Corp.\n");
+        printf("Você precisará reunir provas e aliados para conseguir enfrentar a corporação.\n");
+
+        // Aqui você pode implementar outras partes da história, como reunir aliados, coletar provas etc.
+
+        printf("\nFinalmente, com a ajuda de seus companheiros, você consegue reunir provas suficientes para expor a NeonCyber Corp.\n");
+        printf("A verdade vem à tona, e a corporação é desmascarada perante a sociedade.\n");
+        printf("Hector se torna um líder não só dentro da Skyler, mas também em Midnight City, inspirando as pessoas a serem livres.\n");
+    } else {
+        printf("\nEscolha inválida. O destino de Hector continua incerto.\n");
+    }
+
+    printf("\nParabéns por completar a jornada de Hector! Obrigado por jogar!\n");
+    final();
+
+}
 
 
