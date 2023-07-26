@@ -18,6 +18,8 @@ void save();
 void final();
 void capituloinicial();
 void capitulofinal();
+void nova();
+void menu();
 
 typedef struct Personagem
 {
@@ -26,31 +28,41 @@ typedef struct Personagem
     int defesa;
     int ataque;
     int itens[3];
-    char personalidade;
+    char *personalidade[50];
+    int local;
 } personagem;
 
 personagem Hector;
 
+int dante;
+
 int main(void)
 {
+    system("cls");
     comecar();
     system("pause");
+    system("cls");
     printf("\n");
     continuar();
     system("pause");
     printf("\n");
-
+    system("cls");
     capituloinicial();
+    system("cls");
     printf("\n");
 
         Hector.vida = 100;
         Hector.defesa = 0;
         Hector.ataque = 0;
         Hector.agilidade = 0;
+        Hector.personalidade[50] = "Neutro";
     
     atributos();
-    save();
+        save();
+        menu();
     capitulo1();
+    capitulo2();
+    final();
     system("pause");
 }
 
@@ -63,7 +75,7 @@ void inicio()
         if(arquivo == NULL){
         printf("Impossivel rodar");
     }
-
+    system("cls");
     while(fscanf(arquivo, "%s", texto) != EOF){
         printf("%s ", texto);
     }
@@ -90,12 +102,12 @@ void comecar()
 
             case 3:
             printf("Integrantes:\nArthur de Melo Barbosa\nDaniel Pereira da Costa\nSamuel Alexandre Barreto\n");
-            system("pause");
+            return;
 
 
             default:
             printf("Escolha uma opcao valida");
-            comecar();
+            return;
         }
         return;
     }
@@ -117,6 +129,49 @@ void continuar()
     }
     fclose(arquivo);
     printf("\n");
+}
+
+void capituloinicial()
+{
+    int i;
+    char texto[2000], texto1[2000];
+    printf("Dante, irmao de Hector, recebe uma noticia que o surpreende, ele recebe uma proposta de promocao do gerente na empresa que trabalha\n");
+    printf("\nDigite [1] para aceitar a proposta\nDigite [2] para recusar a proposta\n");
+    scanf("%d", &i);
+
+    if(i == 1){
+        dante = 0;
+        FILE *entrada = fopen("capinicial.txt", "r");
+        FILE *entrada1 = fopen("capinicial1.txt", "r");
+    system("cls");
+    while(fscanf(entrada, "%s", texto) != EOF){
+        printf("%s ", texto);
+
+    }
+    system("pause");
+    system("cls");
+    while(fscanf(entrada1, "%s", texto1) != EOF){
+        printf("%s ", texto1);
+    }
+    fclose(entrada);
+    fclose(entrada1);
+    system("pause");
+    }
+
+    if(i == 2){
+        dante = 1;
+        char texto[2000];
+        FILE *entrada3 = fopen("capinicial2.txt", "r");
+
+    while(fscanf(entrada3, "%s", texto) != EOF){
+        printf("%s ", texto);
+
+    }
+        printf("\n");
+        system("pause");
+        system("cls");
+        fclose(entrada3);
+    }
 }
 
 void atributos(){
@@ -155,6 +210,7 @@ void atributos(){
                 printf("Escolha uma opcao valida\n");
             }
         }
+    system("cls");
     printf("Seus atributos aumentarao conforme suas escolhas e sua jornada\n");
     printf("BOA SORTE!\n");
         system("pause");
@@ -180,6 +236,7 @@ void passagem()
 
 void capitulo1()
 {
+    system("cls");
     int i;
      char texto1[2000];
         FILE *arquivo;
@@ -195,9 +252,9 @@ void capitulo1()
     fclose(arquivo);
 
     system("pause");
-    printf("Digite [1] para investigar\nDigite [2] para ignorar\n");
+    printf("\nDigite [1] para investigar\nDigite [2] para ignorar\n");
     scanf("%d", &i);
-
+    system("cls");
     if(i == 1){
         char texto2[2000];
         FILE *arquivo;
@@ -258,11 +315,11 @@ void capitulo1()
                     if(Hector.agilidade >= 5){
                     printf("Hector foge o mais rapido possivel, fugindo das crianças que o atacariam\n");
                     system("pause");
-                    capitulo2();
                     return;
                     } else {
                         printf("Hector não conseguiu fugir e agora precisa lutar");
                         combate(100, 50);
+                        system("cls");
                     }
                 }
                 if(a == 2){
@@ -270,10 +327,13 @@ void capitulo1()
                     combate(100, 50);
                 }
         }
+        save();
+        menu();
 
     }
     if(i == 2){
-        capitulo2();
+        printf("Quando ele menos espera dois homens empurram ele para dentro da passagem e ele fica preso dentro dela\n");
+        return;
     }
 }
 
@@ -291,23 +351,15 @@ void capitulo2(){
             scanf("%d", &i);
                 if(i == 1)
                 {
-                    char texto4[2000];
-                    FILE *rebeldes = fopen("cap2_1.txt", "r");
-                     while(fscanf(rebeldes, "%s", rebeldes) != EOF){
-                    printf("%s ", texto4);
-                    fclose(rebeldes);
-                    printf("\n");
-                    system("pause");
-
-
+                    nova();
                 }
                 if(i == 2)
                 {
                  printf("Hector tenta fugir mas acaba sendo encontrado por um grupo rebelde\n");
+                 nova();
                 return;
                 }
     }
-}
 }
 
 void defesa(int dano)
@@ -320,7 +372,7 @@ void defesa(int dano)
         danodefendido = 0;
     }
         Hector.vida -= (dano - danodefendido);
-    printf("VOCE TOMOU %d DE DANO\n", danodefendido);
+    printf("HECTOR TOMOU %d DE DANO\n", (dano - danodefendido));
 }
 
 void combate(int vida, int dano)
@@ -351,18 +403,19 @@ void combate(int vida, int dano)
         }
         if(i == 2)
         {
-            if(Hector.agilidade >= 5){
+            if(Hector.agilidade > 5){
                 ("Hector consegue escapar\n");
-            } else{
+            } else if (Hector.agilidade < 5){
             defesa(dano);
             morte();
             printf(" A vida de Hector esta em %d\n", Hector.vida);
             }
-            
             return;
+        
         }
     }
 }
+
 
 void morte()
 {
@@ -373,47 +426,9 @@ void morte()
     }
 }
 
-void capituloinicial()
-{
-    int i;
-    char texto[2000], texto1[2000];
-    printf("Dante, irmao de Hector, recebe uma noticia que o surpreende, ele recebe uma proposta de promocao do gerente na empresa que trabalha\n");
-    printf("Digite [1] para aceitar a proposta\nDigite [2] para recusar a proposta\n");
-    scanf("%d", &i);
-
-    if(i == 1){
-        FILE *entrada = fopen("capinicial.txt", "r");
-        FILE *entrada1 = fopen("capinicial1.txt", "r");
-
-    while(fscanf(entrada, "%s", texto) != EOF){
-        printf("%s ", texto);
-
-    }
-    printf("\n\n");
-    while(fscanf(entrada1, "%s", texto1) != EOF){
-        printf("%s ", texto1);
-    }
-    fclose(entrada);
-    fclose(entrada1);
-    system("pause");
-    }
-
-    if(i == 2){
-        char texto[2000];
-        FILE *entrada3 = fopen("capinicial2.txt", "r");
-
-    while(fscanf(entrada3, "%s", texto) != EOF){
-        printf("%s ", texto);
-
-    }
-        printf("\n");
-        system("pause");
-        fclose(entrada3);
-    }
-}
-
 void save()
 {
+    printf("O jogo esta sendo salvo\n");
     FILE *save = fopen("save.dat", "w+b");
     fwrite(&Hector, sizeof(Hector), 1, save);
     fclose(save);
@@ -422,8 +437,7 @@ void save()
 void final()
 {
     int i;
-    printf("\n\nGAME OVER\n\n");
-    printf("[1] Encerrar jogo\n[2] Continuar do ultimo ponto de gravacao");
+    printf("\n\nGAME OVER\n\n[1] Para sair\n[2] Para rodar save");
     scanf("%d", &i);
     switch (i)
     {
@@ -451,9 +465,15 @@ printf("\nVocê finalmente chegou ao confronto final com o CEO da NeonCyber Corp
     scanf("%d", &escolha);
 
     if (escolha == 1) {
+        if(dante == 0){
+            printf("Apos a perder tbm seu irmao, Hector dificilmente nao deixaria o odio subir a mente.\n");
+        }
         printf("\nHector sucumbe à vingança e mata o CEO da NeonCyber Corp, sujando suas mãos de sangue.\n");
         printf("Infelizmente, seu desejo por vingança o consome, e ele se torna um fugitivo da justiça.\n");
     } else if (escolha == 2) {
+        if(dante == 1){
+            printf("Hector sabia que se fizesse aquilo, seu irmao tambem sofreria as consequencias.\n");
+        }
         printf("\nHector decide seguir o caminho da justiça, buscando indiciar o CEO da NeonCyber Corp.\n");
         printf("Você precisará reunir provas e aliados para conseguir enfrentar a corporação.\n");
 
@@ -465,10 +485,53 @@ printf("\nVocê finalmente chegou ao confronto final com o CEO da NeonCyber Corp
     } else {
         printf("\nEscolha inválida. O destino de Hector continua incerto.\n");
     }
-
     printf("\nParabéns por completar a jornada de Hector! Obrigado por jogar!\n");
-    final();
-
+    return;
 }
 
+void nova()
+{
+    char texto4[2000];
+                    FILE *rebeldes = fopen("cap2_1.txt", "r");
+                     while(!feof(rebeldes)){
+                    fgets(texto4,2000, rebeldes);
+                    printf("%s ", texto4);
+                    fclose(rebeldes);
+                    printf("\n");
 
+                    char texto5[2000];
+                    FILE *resistencia = fopen("resistencia.txt", "r");
+                     while(!feof(resistencia)){
+                    fgets(texto5,2000, resistencia);
+                    printf("%s ", texto5);
+                    fclose(resistencia);
+                    printf("\n");
+}
+}
+capitulofinal();
+}
+
+void menu()
+{
+    int i;
+    printf("[1] para sair do jogo\n[2] para ver os atributos do personagem\n[3] Para voltar ao jogo\n");
+    scanf("%d", &i);
+    if(i == 1){
+        printf("Todo progesso não salvo sera perdido\n[1] Continuar\n[2] Voltar\n");
+        scanf("%d", &i);
+        if(i == 1){
+            exit(1);
+        }
+        if(i != 1){
+            return;
+        }
+    }
+    if(i == 2)
+    {
+        printf("\nHector tem %d de vida, %d de defesa, %d de ataque e %d de agilidade\n", Hector.vida, Hector.defesa, Hector.ataque, Hector.agilidade);
+        system("pause");
+        return;
+    }
+    return;
+
+}
